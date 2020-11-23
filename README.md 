@@ -1,0 +1,68 @@
+install:
+pip3 install -r requirements.txt
+
+start:
+docker run -d -p 27017:27017 mongo
+python3 app.py
+
+cURL commands:
+
+create new documents:
+curl  -H 'Content-Type: application/json' -X 'GET' --data '
+{"data": [
+  {
+    "name": "apple_phone",
+    "description": "some phone from apple",
+    "parameters": {
+      "price": 5000,
+      "brand": "apple"
+    }
+  },
+  {
+    "name": "dell_laptop",
+    "description": "some laptop from dell",
+    "parameters": {
+      "price": 20000,
+      "brand": "dell"
+    }
+  },
+  {
+    "name": "asus_computer",
+    "description": "some computer from asus",
+    "parameters": {
+      "price": 40000,
+      "brand": "asus"
+    }
+  },
+  {
+    "_id": 1,
+    "name": "honor_phone",
+    "description": "some phone from honor",
+    "parameters": {
+      "price": 3000,
+      "brand": "honor"
+    }
+  },
+  {
+    "name": "honor_laptop",
+    "description": "some laptop from honor",
+    "parameters": {
+      "price": 18000,
+      "brand": "honor"
+    }
+  },
+  {
+    "name": "acer_computer",
+    "description": "some computer from acer",
+    "parameters":{
+      "price": 30000,
+      "brand": "acer"
+    }
+  }
+]}' http://127.0.0.1:5000/create
+
+get documents by parameter:
+curl  -H 'Content-Type: application/json' -X 'GET' --data '{"elements":{"parameters.brand":"honor"}}' http://127.0.0.1:5000/find
+
+get document details by id
+curl  -H 'Content-Type: application/json' -X 'GET' --data '{"id":{"_id":1}}' http://127.0.0.1:5000/find_by_id
